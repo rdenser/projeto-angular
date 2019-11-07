@@ -1,6 +1,6 @@
 export class Email {
     
-    destinataraio = "";
+    destinatario = "";
     assunto = "";
     conteudo = "";
     
