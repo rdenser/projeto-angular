@@ -1,5 +1,21 @@
-<form action="">
-    <cmail-form-group>
-        <input type="email" name="para" id="para" placeholder=" " cmailFromInput>
+<form [formGroup]="formCadastro" (ngSubmit)="handleCadastrarUsuario()" (input)="handleInput()">
+    <cmail-form-group [campo]="formCadastro.get('nome')">
+        <input name="nome" formControlName="nome" placeholder="Nome" cmailFromInput>
     </cmail-form-group>
+
+    <cmail-form-group [campo]="formCadastro.get('usuario')">
+        <input name="usuario" formControlName="usuario" placeholder="Usuário" cmailFromInput>
+    </cmail-form-group>
+
+    <cmail-form-group [campo]="formCadastro.get('telefone')">
+        <input name="telefone" formControlName="telefone" placeholder="Telefone" cmailFromInput>
+    </cmail-form-group>
+
+    <cmail-form-group [campo]="formCadastro.get('avatar')">
+        <input name="avatar" formControlName="avatar" placeholder="Avatar" cmailFromInput>
+    </cmail-form-group>
+
+    <button>
+        Cadastrar usuário
+    </button>
 </form>
