@@ -1,21 +1,129 @@
-<form [formGroup]="formCadastro" (ngSubmit)="handleCadastrarUsuario()" (input)="handleInput()">
-    <cmail-form-group [campo]="formCadastro.get('nome')">
-        <input name="nome" formControlName="nome" placeholder="Nome" cmailFromInput>
-    </cmail-form-group>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+  <cmail-header></cmail-header>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+      <div class="mdl-grid">
 
-    <cmail-form-group [campo]="formCadastro.get('usuario')">
-        <input name="usuario" formControlName="usuario" placeholder="Usuário" cmailFromInput>
-    </cmail-form-group>
+        <form [formGroup]="formCadastro" (ngSubmit)="handleCadastrarUsuario()">
+          <!-- Campo nome -->
+          <cmail-form-group [campo]="formCadastro.get('nome')">
+            <input name="nome" formControlName="nome" placeholder="Nome" cmailFromInput>
+            <!-- Validação: Campo obrigatorio -->
+            <span 
+              *ngIf="formCadastro.get('nome').getError('required')"
+              class="mdl-textfield__error">
+              Informar um nome é obrigatório!
+            </span>
 
-    <cmail-form-group [campo]="formCadastro.get('telefone')">
-        <input name="telefone" formControlName="telefone" placeholder="Telefone" cmailFromInput>
-    </cmail-form-group>
+            <!-- Validação: Mínimo de caracteres -->
+            <span 
+              *ngIf="formCadastro.get('nome').getError('minlength')"
+              class="mdl-textfield__error">
+              O nome tem que ter {{formCadastro.get('nome').getError('minlength').requiredLength}} caracteres no mínimo.
+            </span>
+            
+            <!-- Validação: Máximo de caracteres -->
+            <span 
+              *ngIf="formCadastro.get('nome').getError('maxlength')"
+              class="mdl-textfield__error">
+              O nome tem que ter {{formCadastro.get('nome').getError('maxlength').requiredLength}} caracteres no máximo.
+            </span>
+            
+            <!-- Validação: Máximo de caracteres -->
+            <span 
+              *ngIf="formCadastro.get('nome').getError('pattern')"
+              class="mdl-textfield__error">
+              O nome não pode ter números ou caracteres especiais.
+            </span>
+          </cmail-form-group>
 
-    <cmail-form-group [campo]="formCadastro.get('avatar')">
-        <input name="avatar" formControlName="avatar" placeholder="Avatar" cmailFromInput>
-    </cmail-form-group>
 
-    <button>
-        Cadastrar usuário
-    </button>
-</form>
+
+          <!-- Campo usuário -->
+          <cmail-form-group [campo]="formCadastro.get('usuario')">
+            <input name="usuario" formControlName="usuario" placeholder="Usuário" cmailFromInput>
+            <!-- Validação: Campo obrigatorio -->
+            <span 
+              *ngIf="formCadastro.get('usuario').getError('required')"
+              class="mdl-textfield__error">
+              Informar um usuário é obrigatório!
+            </span>
+
+            <!-- Validação: Mínimo de caracteres -->
+            <span 
+              *ngIf="formCadastro.get('usuario').getError('minlength')"
+              class="mdl-textfield__error">
+              O usuario tem que ter {{formCadastro.get('usuario').getError('minlength').requiredLength}} caracteres no mínimo.
+            </span>
+            
+            <!-- Validação: Máximo de caracteres -->
+            <span 
+              *ngIf="formCadastro.get('usuario').getError('maxlength')"
+              class="mdl-textfield__error">
+              O usuario tem que ter {{formCadastro.get('usuario').getError('maxlength').requiredLength}} caracteres no máximo.
+            </span>
+          </cmail-form-group>
+
+
+
+          <!-- Campo telefone -->
+          <cmail-form-group [campo]="formCadastro.get('telefone')">
+            <input name="telefone" formControlName="telefone" placeholder="Telefone" cmailFromInput>
+            <!-- Validação: Campo obrigatorio -->
+            <span 
+              *ngIf="formCadastro.get('telefone').getError('required')"
+              class="mdl-textfield__error">
+              Informar um telefone é obrigatório!
+            </span>
+            <!-- Validação: Apenas números -->
+            <span 
+              *ngIf="formCadastro.get('telefone').getError('pattern')"
+              class="mdl-textfield__error">
+              O telefone precisa ter entre 8 e 9 números, somente.
+            </span>
+          </cmail-form-group>
+
+
+
+          <!-- Campo avatar -->
+          <cmail-form-group [campo]="formCadastro.get('avatar')">
+            <input name="avatar" formControlName="avatar" placeholder="Avatar" cmailFromInput>
+          
+            <!-- Validação: Required -->
+            <span 
+              *ngIf="formCadastro.get('avatar').getError('required')"
+              class="mdl-textfield__error">
+              O avatar é obrigatório.
+            </span>
+          </cmail-form-group>
+
+
+
+          <!-- Campo senha -->
+          <cmail-form-group [campo]="formCadastro.get('senha')">
+            <input name="senha" formControlName="senha" placeholder="Senha" cmailFromInput>
+            <!-- Validação: Required -->
+            <span 
+              *ngIf="formCadastro.get('senha').getError('required')"
+              class="mdl-textfield__error">
+              Por favor, informe uma senha.
+            </span>
+
+            <!-- Validação: Mínimo de caracteres -->
+            <span 
+              *ngIf="formCadastro.get('senha').getError('minlength')"
+              class="mdl-textfield__error">
+              A senha deve conter, no mínimo, {{formCadastro.get('senha').getError('minlength').requiredLength}} caracteres.
+            </span>
+          </cmail-form-group>
+
+          <div class="mdl-card__actions">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+              Cadastrar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
