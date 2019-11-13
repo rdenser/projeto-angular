@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { CaixaDeEntradaModule } from './modules/caixa-de-entrada/caixa-de-entrada.module';
 import { LoginModule } from './modules/login/login.module';
 import { CadastroModule } from './modules/cadastro/cadastro.module';
-import { RoteamentoModule } from './routes';
+import { RouterModule } from '@angular/router';
+
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import { RoteamentoModule } from './routes';
     CaixaDeEntradaModule,
     LoginModule,
     CadastroModule,
-    RoteamentoModule
+    RouterModule    
   ],
   providers: [],
   bootstrap: [AppComponent],

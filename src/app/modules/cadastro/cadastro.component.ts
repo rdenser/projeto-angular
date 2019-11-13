@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { UserInputDTO } from 'src/app/models/dto/user-input';
+import { map, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'cmail-cadastro',
@@ -29,7 +31,7 @@ export class CadastroComponent {
         Validators.required,
         Validators.pattern(/^\d{8,9}$/)
       ]),
-    avatar: new FormControl('', [Validators.required]),
+    avatar: new FormControl('', Validators.required, this.validaAvatar.bind(this)),
     senha: new FormControl('',
       [
         Validators.required,
@@ -43,11 +45,31 @@ export class CadastroComponent {
   //     this.formCadastro.get(FormControlName).markAsTouched({ onlySelf: true });
   //   })
   // }
+  mensagem = "";
 
-  constructor(private http: HttpClient){}
-  
+  constructor(private http: HttpClient) { }
+
+  validaAvatar(control: FormControl) {
+    return this.http
+      .head(control.value, { observe: "response" })
+      .pipe(
+        map((httpResponse) => {
+          console.log(httpResponse);
+          //se não tiver erros, retornamos null
+          return null
+        }),
+        catchError((erro) => {
+          console.log(erro);
+          //se tiver erros, retornamos um objeto com detalhes do erro
+          return [{
+            urlInvalida: true
+          }]
+        })
+      )
+  }
+
   handleCadastrarUsuario() {
-    if(this.formCadastro.invalid){
+    if (this.formCadastro.invalid) {
       this.formCadastro.markAllAsTouched();
       return;
     }
@@ -56,18 +78,20 @@ export class CadastroComponent {
       this.formCadastro.value
     );
 
-    let formIngles = {
-      name: this.formCadastro.get('nome').value,
-      username: this.formCadastro.get('usuario').value,
-      phone: this.formCadastro.get('telefone').value,
-      password: this.formCadastro.get('senha').value,
-      avatar: this.formCadastro.get('avatar').value
-    }
+    let userDTO = new UserInputDTO(this.formCadastro.value);
 
-    this.http.post('http://localhost:3200/users', formIngles).subscribe();
+    this.http.post('http://localhost:3200/users', userDTO).subscribe(
+      (resposta: any) => {
+        console.log(resposta);
+        this.mensagem = `${resposta.email} cadastrado com sucesso`;
+        this.formCadastro.reset();
+      },
+      (erro) => {
+        console.error(erro);
+        console.error('deu ruim');
+      }
+    );
 
-    console.log(formIngles);
-    
   }
 
 }
