@@ -32,6 +32,7 @@ export class CaixaDeEntradaComponent implements OnInit {
   private _novoEmail = false;
   email = new Email();
   listaDeEmails: Email[] = [];
+  termoDeFiltro = "";
 
   get novoEmail() {
     return this._novoEmail;
@@ -73,6 +74,17 @@ export class CaixaDeEntradaComponent implements OnInit {
           }
         )
     }
+  }
+
+  get listaFiltrada(){
+    return this.listaDeEmails.filter((email) => {
+      if(
+        email.destinatario.toLowerCase().includes(this.termoDeFiltro.toLowerCase())
+        || email.assunto.toLowerCase().includes(this.termoDeFiltro.toLowerCase())
+        || email.conteudo.toLowerCase().includes(this.termoDeFiltro.toLowerCase())
+      )
+      return email;
+    })
   }
 
 }

@@ -31,7 +31,7 @@ export class EmailService {
 
   listar(): Observable<Email[]> {
     return this.http
-      .get<EmailApi>(this.url, this.httpOptions)
+      .get<EmailApi[]>(this.url, this.httpOptions)
       .pipe(
         map(
           (listaEmailsApi) => {

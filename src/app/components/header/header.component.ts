@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { PageDataService } from 'src/app/services/page-data.service';
 
 @Component({
@@ -11,6 +11,8 @@ import { PageDataService } from 'src/app/services/page-data.service';
 })
 
 export class HeaderComponent {
+    
+    @Output() filter = new EventEmitter<string>();
 
     titulo = '';
 
@@ -25,5 +27,9 @@ export class HeaderComponent {
 
     mostraMenu() {
         this.statusMenu = !this.statusMenu;
+    }
+
+    filtrar(inputBuscar: HTMLInputElement){
+        this.filter.emit(inputBuscar.value);
     }
 }
