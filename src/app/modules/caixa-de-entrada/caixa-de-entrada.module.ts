@@ -4,17 +4,18 @@ import { CaixaDeEntradaComponent } from './caixa-de-entrada.component';
 import { FormsModule } from '@angular/forms';
 import { SharedComponentsModule } from 'src/app/components/shared-components.module';
 import { CaixaDeEntradaRoutingModule } from './caixa-de-entrada-routing.module';
+import { ListItemComponent } from './list-item.component';
 
 
 
 @NgModule({
-  declarations: [CaixaDeEntradaComponent],
+  declarations: [CaixaDeEntradaComponent, ListItemComponent],
   imports: [
     CommonModule,
     FormsModule,
     SharedComponentsModule,
     CaixaDeEntradaRoutingModule
   ],
-  exports: [CaixaDeEntradaComponent]
+  exports: [CaixaDeEntradaComponent, ListItemComponent]
 })
 export class CaixaDeEntradaModule { }
