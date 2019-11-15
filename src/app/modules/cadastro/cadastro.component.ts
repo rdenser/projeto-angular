@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { UserInputDTO } from 'src/app/models/dto/user-input';
 import { map, catchError } from 'rxjs/operators';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'cmail-cadastro',
@@ -47,7 +48,8 @@ export class CadastroComponent {
   // }
   mensagem = "";
 
-  constructor(private http: HttpClient) { }
+  constructor(private cadastroService: UserService,
+    private http: HttpClient) { }
 
   validaAvatar(control: FormControl) {
     return this.http
@@ -74,16 +76,12 @@ export class CadastroComponent {
       return;
     }
 
-    console.log(
-      this.formCadastro.value
-    );
-
-    let userDTO = new UserInputDTO(this.formCadastro.value);
-
-    this.http.post('http://localhost:3200/users', userDTO).subscribe(
+    this.cadastroService
+    .cadastrar(this.formCadastro.value)
+    .subscribe(
       (resposta: any) => {
         console.log(resposta);
-        this.mensagem = `${resposta.email} cadastrado com sucesso`;
+        this.mensagem = `${resposta.name} cadastrado com sucesso`;
         this.formCadastro.reset();
       },
       (erro) => {

@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CadastroComponent } from './cadastro.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CadastroRoutingModule } from './cadastro-routing-routing.module';
+import { UserService } from 'src/app/services/user.service';
 
 
 
@@ -17,6 +18,7 @@ import { CadastroRoutingModule } from './cadastro-routing-routing.module';
     HttpClientModule,
     CadastroRoutingModule
   ],
-  exports: [CadastroComponent]
+  exports: [CadastroComponent],
+  providers: [UserService]
 })
 export class CadastroModule { }
