@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PageDataService } from 'src/app/services/page-data.service';
 
 @Component({
     selector: 'cmail-header',
@@ -11,9 +12,18 @@ import { Component } from '@angular/core';
 
 export class HeaderComponent {
 
+    titulo = '';
+
+    constructor(pageService: PageDataService) {
+        pageService.tituloDaPagina
+            .subscribe((tituloNovo) => {
+                this.titulo = tituloNovo;
+            })
+    }
+
     statusMenu = false;
 
-    mostraMenu (){
+    mostraMenu() {
         this.statusMenu = !this.statusMenu;
     }
 }

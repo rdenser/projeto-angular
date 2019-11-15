@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { UserInputDTO } from 'src/app/models/dto/user-input';
 import { map, catchError } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
+import { PageDataService } from 'src/app/services/page-data.service';
 
 @Component({
   selector: 'cmail-cadastro',
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.css']
 })
-export class CadastroComponent {
+export class CadastroComponent implements OnInit {
 
   formCadastro = new FormGroup({
     nome: new FormControl('',
@@ -46,10 +46,16 @@ export class CadastroComponent {
   //     this.formCadastro.get(FormControlName).markAsTouched({ onlySelf: true });
   //   })
   // }
+
   mensagem = "";
 
   constructor(private cadastroService: UserService,
-    private http: HttpClient) { }
+              private http: HttpClient,
+              private pageDataService: PageDataService) { }
+
+  ngOnInit() {
+    this.pageDataService.atualizaTitulo('Cadastro')
+  }
 
   validaAvatar(control: FormControl) {
     return this.http
@@ -77,18 +83,18 @@ export class CadastroComponent {
     }
 
     this.cadastroService
-    .cadastrar(this.formCadastro.value)
-    .subscribe(
-      (resposta: any) => {
-        console.log(resposta);
-        this.mensagem = `${resposta.name} cadastrado com sucesso`;
-        this.formCadastro.reset();
-      },
-      (erro) => {
-        console.error(erro);
-        console.error('deu ruim');
-      }
-    );
+      .cadastrar(this.formCadastro.value)
+      .subscribe(
+        (resposta: any) => {
+          console.log(resposta);
+          this.mensagem = `${resposta.name} cadastrado com sucesso`;
+          this.formCadastro.reset();
+        },
+        (erro) => {
+          console.error(erro);
+          console.error('deu ruim');
+        }
+      );
 
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'cmail-list-item',
@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListItemComponent implements OnInit {
 
+  @Input() destinatario = "";
+  @Input() assunto = "";
+  @Input() conteudo = "";
+  @Input() dataEnvio = "";
+  @Output() clickNaLixeira = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  apagarEmail(){
+    this.clickNaLixeira.emit();
+  }
 }
